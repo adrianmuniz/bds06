@@ -15,9 +15,9 @@ public class GenreMinDTO {
 		this.name = name;
 	};
 	
-	public GenreMinDTO(GenreMinProjection projection) {
-		id = projection.getId();
-		name = projection.getName();
+	public GenreMinDTO(GenreMinProjection cat) {
+		id = cat.getId();
+		name = cat.getName();
 	}
 
 	public Long getId() {

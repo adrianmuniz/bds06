@@ -1,55 +1,57 @@
-package com.devsuperior.movieflix.entities;
+package com.devsuperior.movieflix.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.devsuperior.movieflix.entities.Movie;
+import com.devsuperior.movieflix.entities.Review;
+import com.devsuperior.movieflix.projections.MovieMinProjection;
 
-@Entity
-@Table(name = "tb_movie")
-public class Movie {
+public class MovieMinDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String subTitle;
 	private Integer year;
 	private String imgUrl;
-	
-	@Column(length=2000)
 	private String synopsis;
+	private GenreMinDTO genre;
 	
-	@ManyToOne
-	@JoinColumn(name = "genre_id")
-	private Genre genre;
-	
-	@OneToMany(mappedBy = "movie")
 	private List<Review> reviews = new ArrayList<>();
 	
-	public Movie() {
+	public MovieMinDTO() {
+		
 	}
 
-	public Movie(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre,
-			List<Review> reviews) {
-		super();
+	public MovieMinDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis,
+			Long genre, List<Review> reviews) {
 		this.id = id;
 		this.title = title;
 		this.subTitle = subTitle;
 		this.year = year;
 		this.imgUrl = imgUrl;
 		this.synopsis = synopsis;
-		this.genre = genre;
 		this.reviews = reviews;
+	}
+	
+	public MovieMinDTO(Movie entity) {
+		id = entity.getId();
+		title = entity.getTitle();
+		subTitle = entity.getSubTitle();
+		year = entity.getYear();
+		imgUrl = entity.getImgUrl();
+		synopsis = entity.getSynopsis();
+	}
+	
+	public MovieMinDTO(MovieMinProjection projection) {
+		id = projection.getId();
+		title = projection.getTitle();
+		subTitle = projection.getSubTitle();
+		year = projection.getYear();
+		imgUrl = projection.getImgUrl();
+		synopsis = projection.getSynopsis();
+		genre = new GenreMinDTO(projection.getGenreId(), projection.getGenreName());
 	}
 
 	public Long getId() {
@@ -100,14 +102,14 @@ public class Movie {
 		this.synopsis = synopsis;
 	}
 	
-	public Genre getGenre() {
+	public GenreMinDTO getGenre() {
 		return genre;
 	}
 
-	public void setGenre(Genre genre) {
+	public void setGenre(GenreMinDTO genre) {
 		this.genre = genre;
 	}
-	
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
@@ -129,7 +131,7 @@ public class Movie {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Movie other = (Movie) obj;
+		MovieMinDTO other = (MovieMinDTO) obj;
 		return Objects.equals(id, other.id);
-	}
+	};
 }
