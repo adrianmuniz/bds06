@@ -10,7 +10,7 @@ import com.devsuperior.movieflix.projections.MovieMinProjection;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-	@Query(nativeQuery = true, value = "SELECT movies.id, movies.img_url, movies.sub_title, movies.synopsis, movies.title, movies.year, movies.genre_id, genres.name FROM tb_movie movies "
+	@Query(nativeQuery = true, value = "SELECT movies.id, movies.img_url as imgUrl, movies.sub_title as subTitle, movies.synopsis, movies.title, movies.year, genres.id as genreId, genres.name as genreName FROM tb_movie movies "
 			+ "INNER JOIN tb_genre genres ON movies.genre_id = genres.id "
 			+ "WHERE movies.id = :id")
 	Optional<MovieMinProjection> search1(Long id);

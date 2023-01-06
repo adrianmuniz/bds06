@@ -1,11 +1,8 @@
 package com.devsuperior.movieflix.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import com.devsuperior.movieflix.entities.Movie;
-import com.devsuperior.movieflix.entities.Review;
 import com.devsuperior.movieflix.projections.MovieMinProjection;
 
 public class MovieMinDTO {
@@ -18,23 +15,21 @@ public class MovieMinDTO {
 	private String synopsis;
 	private GenreMinDTO genre;
 	
-	private List<Review> reviews = new ArrayList<>();
-	
 	public MovieMinDTO() {
 		
 	}
 
 	public MovieMinDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis,
-			Long genre, List<Review> reviews) {
+			GenreMinDTO genre) {
 		this.id = id;
 		this.title = title;
 		this.subTitle = subTitle;
 		this.year = year;
 		this.imgUrl = imgUrl;
 		this.synopsis = synopsis;
-		this.reviews = reviews;
+		this.genre = genre;
 	}
-	
+
 	public MovieMinDTO(Movie entity) {
 		id = entity.getId();
 		title = entity.getTitle();
@@ -108,14 +103,6 @@ public class MovieMinDTO {
 
 	public void setGenre(GenreMinDTO genre) {
 		this.genre = genre;
-	}
-
-	public List<Review> getReviews() {
-		return reviews;
-	}
-
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
 	}
 
 	@Override
