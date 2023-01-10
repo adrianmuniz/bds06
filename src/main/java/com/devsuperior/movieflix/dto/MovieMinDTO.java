@@ -29,14 +29,15 @@ public class MovieMinDTO {
 		this.synopsis = synopsis;
 		this.genre = genre;
 	}
-
-	public MovieMinDTO(Movie entity) {
-		id = entity.getId();
-		title = entity.getTitle();
-		subTitle = entity.getSubTitle();
-		year = entity.getYear();
-		imgUrl = entity.getImgUrl();
-		synopsis = entity.getSynopsis();
+	
+	public MovieMinDTO(Movie x) {
+		id = x.getId();
+		title = x.getTitle();
+		subTitle = x.getSubTitle();
+		year = x.getYear();
+		imgUrl = x.getImgUrl();
+		synopsis = x.getSynopsis();
+		genre = new GenreMinDTO(x.getGenre().getId(), x.getGenre().getName());
 	}
 	
 	public MovieMinDTO(MovieMinProjection projection) {

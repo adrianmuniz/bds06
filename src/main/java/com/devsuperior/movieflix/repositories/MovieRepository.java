@@ -2,9 +2,12 @@ package com.devsuperior.movieflix.repositories;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.projections.MovieMinProjection;
 
@@ -14,4 +17,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 			+ "INNER JOIN tb_genre genres ON movies.genre_id = genres.id "
 			+ "WHERE movies.id = :id")
 	Optional<MovieMinProjection> search1(Long id);
+	
+	@Query("SELECT obj FROM Movie obj INNER JOIN obj.genre genres WHERE "
+			+ "(:genre IS NULL OR :genre IN genres) "
+			+ "ORDER BY obj.title ASC")
+	Page<Movie> find(Genre genre, Pageable pageable);
 }	
