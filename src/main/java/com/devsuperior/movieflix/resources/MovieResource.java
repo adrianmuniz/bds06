@@ -1,5 +1,7 @@
 package com.devsuperior.movieflix.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.movieflix.dto.MovieMinDTO;
+import com.devsuperior.movieflix.dto.MovieReviewDTO;
 import com.devsuperior.movieflix.services.MovieService;
 
 @RestController
@@ -32,6 +35,12 @@ public class MovieResource {
 	@GetMapping
 	public ResponseEntity<Page<MovieMinDTO>> findAll(@RequestParam(value = "genreId", defaultValue = "0") Long genreId, Pageable pageable) {
 		Page<MovieMinDTO> list = service.findAllPaged(genreId, pageable);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/{id}/reviews")
+	public ResponseEntity<List<MovieReviewDTO>> findReviewsByMovie(@PathVariable Long id) {
+		List<MovieReviewDTO> list = service.findReviewsByMovie(id);
 		return ResponseEntity.ok().body(list);
 	}
 }

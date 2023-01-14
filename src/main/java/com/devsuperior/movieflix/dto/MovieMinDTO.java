@@ -1,8 +1,12 @@
 package com.devsuperior.movieflix.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.devsuperior.movieflix.entities.Movie;
+import com.devsuperior.movieflix.entities.Review;
 import com.devsuperior.movieflix.projections.MovieMinProjection;
 
 public class MovieMinDTO {
@@ -14,6 +18,7 @@ public class MovieMinDTO {
 	private String imgUrl;
 	private String synopsis;
 	private GenreMinDTO genre;
+	private List<ReviewDTO> review = new ArrayList<>();
 	
 	public MovieMinDTO() {
 		
@@ -38,6 +43,12 @@ public class MovieMinDTO {
 		imgUrl = x.getImgUrl();
 		synopsis = x.getSynopsis();
 		genre = new GenreMinDTO(x.getGenre().getId(), x.getGenre().getName());
+	
+	}
+	
+	public MovieMinDTO(Movie entity, Set<Review> reviews) {
+		this(entity);
+		reviews.forEach(cat -> this.review.add(new ReviewDTO(cat)));
 	}
 	
 	public MovieMinDTO(MovieMinProjection projection) {
