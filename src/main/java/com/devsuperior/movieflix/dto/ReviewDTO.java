@@ -2,12 +2,16 @@ package com.devsuperior.movieflix.dto;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.devsuperior.movieflix.entities.Review;
 import com.devsuperior.movieflix.projections.ReviewProjection;
 
 public class ReviewDTO {
 
 	private Long id;
+	@NotBlank
 	private String text;
 	private Long movieId;
 	private UserDTO user;
@@ -16,6 +20,7 @@ public class ReviewDTO {
 	}
 
 	public ReviewDTO(Long id, String text, Long movieId, UserDTO user) {
+		super();
 		this.id = id;
 		this.text = text;
 		this.movieId = movieId;

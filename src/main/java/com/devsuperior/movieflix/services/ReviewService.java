@@ -18,11 +18,14 @@ public class ReviewService {
 	@Autowired
 	private MovieRepository movieRepository;
 	
+	@Autowired
+	private AuthService authService;
+	
 	@Transactional
 	public ReviewDTO insert(ReviewDTO dto) {
-		Review entity = new Review();
-		entity.setText(dto.getText());
-		entity.setMovie(movieRepository.getOne(dto.getMovieId()));
+		var movie = movieRepository.getOne(dto.getMovieId());
+		var user = authService.authenticated();
+		var entity = new Review(null, dto.getText(), user, movie);
 		entity = repository.save(entity);
 		return new ReviewDTO(entity);
 	}
